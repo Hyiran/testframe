@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scloudpay.testframe.admin.sysmgr.dao.SysDictTypeMapper">
+    
+    <resultMap type="com.scloudpay.testframe.admin.sysmgr.entity.SysDictType" id="sysDictTypeMap" >
+       <id property="id" column="ID"/>
+       <result property="typeCode" column="type_code"/>
+       <result property="typeKind" column="type_kind"/>
+       <result property="typeName" column="type_name"/>
+       <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <sql id="paramsSql1">
+		<if test="condition != null"> and (type_code like #{condition} or type_name like #{condition})</if>
+	</sql>
+	<select id="queryWithPage" resultMap="sysDictTypeMap">
+       select 
+      	 	ID as id,
+       		type_code as typeCode,
+       		type_kind as typeKind,
+       		type_name as typeName,
+       		remark as remark
+        from sys_dict_type where 1=1 <include refid="paramsSql1"/>
+    </select>
+    
+    
+    <sql id="paramsSql2">
+		<if test="typeCode != null"> and type_code = #{typeCode}</if>
+		<if test="typeKind != null"> and type_kind = #{typeKind}</if>
+	</sql>
+    <select id="queryByParams" resultMap="sysDictTypeMap">
+       select 
+      	 	ID as id,
+       		type_code as typeCode,
+       		type_kind as typeKind,
+       		type_name as typeName,
+       		remark as remark
+        from sys_dict_type where 1=1 <include refid="paramsSql2"/>
+    </select>
+    
+    
+    <select id="getDictTypeById" resultMap="sysDictTypeMap">
+       select *from sys_dict_type where ID = #{id}
+    </select>
+	
+    <insert id="insertDictType" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysDictType" useGeneratedKeys="true" keyProperty="id"> 
+       insert into 
+          sys_dict_type(
+          	type_code,
+       		type_kind,
+       		type_name,
+       		remark) 
+       values(
+          	#{typeCode},
+       		#{typeKind},
+       		#{typeName},
+       		#{remark}
+        );
+    </insert>
+    
+    <update id="updateDictType" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysDictType">
+        update sys_dict_type set 
+            type_code = #{typeCode},
+       		type_kind = #{typeKind},
+       		type_name = #{typeName},
+       		remark = #{remark}
+        where ID=#{id}         
+    </update>
+    
+    <delete id="delDictType" parameterType="Long">
+		delete from sys_dict_type where ID = #{id}
+	</delete>
+    
+</mapper>

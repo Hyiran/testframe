@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${aitest.home}/logs/aitest.log</File>
+		<Encoding>UTF-8</Encoding>  
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> <!-- rollover daily -->
+			<FileNamePattern>${aitest.home}/logs/clear-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"> <!-- or whenever the file size reaches 50MB -->
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	 	<layout class="ch.qos.logback.classic.PatternLayout">  
+			<pattern>
+				[AITEST][%d{yyyy/MM/dd HH:mm:ss SSS}] %-5level [%thread][%c:%line]- %msg%n
+			</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	 	<Encoding>UTF-8</Encoding>           
+	 	<layout class="ch.qos.logback.classic.PatternLayout">  
+			<pattern>
+				[AITEST][%d{yyyy/MM/dd HH:mm:ss SSS}] %-5level [%thread][%c:%line]- %msg%n
+			</pattern>
+		</layout>
+	</appender>
+	
+	<logger name="org.apache.commons.httpclient" level="ERROR"/>
+	<logger name="org.springframework.core.env" level="ERROR"/>
+	<logger name="org.springframework.beans" level="ERROR"/>
+	<logger name="org.springframework.web.servlet" level="DEBUG"/>
+	<logger name="org.springframework" level="INFO"/>
+	<logger name="org.hibernate" level="ERROR"/>
+	<logger name="httpclient.wire" level="ERROR"/>
+	<logger name="org.apache.commons" level="ERROR"/>
+	<logger name="jdbc.sqltiming" level="ERROR"/>
+	<logger name="org.mybatis.spring" level="ERROR"/>
+	<logger name="org.apache.ibatis" level="ERROR"/>
+	<logger name="com.tandong" level="INFO"/>
+	<logger name="org.apache.zookeeper" level="ERROR"/>
+	<logger name="org.springframework.batch" level="DEBUG"/>
+	
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>
+

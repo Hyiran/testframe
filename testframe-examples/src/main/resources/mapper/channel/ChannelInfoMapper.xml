@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scloudpay.testframe.examples.interfacetest.dao.ChannelInfoMapper">
+	<resultMap id="BaseResultMap" type="com.scloudpay.testframe.examples.interfacetest.entity.ChannelInfo">
+		<id column="ID" property="id" jdbcType="BIGINT" />
+		<result column="channel_code" property="channelCode" jdbcType="VARCHAR" />
+		<result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+		<result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="fundchannel_columns">
+		ID, channel_code, channel_name
+	</sql>
+	<select id="getAllChannel" resultMap="BaseResultMap">
+		select
+		<include refid="fundchannel_columns" />
+		from channel_info
+	</select>
+	
+	<insert id="inertChannelInfo" parameterType="com.scloudpay.testframe.examples.interfacetest.entity.ChannelInfo" >
+	    insert into channel_info (id, channel_code, channel_name, batch_no)
+	    values (#{id,jdbcType=INTEGER}, #{channelCode,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delChannelInfo" parameterType="java.lang.String" >
+    	delete from channel_info
+    	where batch_no != #{batchNo,jdbcType=VARCHAR}
+    </delete>
+    
+    <insert id="insertChannelInfoHis" parameterType="java.lang.String">
+    insert into channel_info_his (id, channel_code,
+      channel_name, batch_no)
+    select id, channel_code,
+      channel_name, batch_no from channel_info r
+      where r.batch_no is not null
+  </insert>
+    
+  
+</mapper>

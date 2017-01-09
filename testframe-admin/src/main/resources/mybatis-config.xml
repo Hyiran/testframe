@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+
+	<!-- 必须放到settings下面 -->
+	<plugins>
+		<plugin
+			interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
+			<property name="dialectClass"
+				value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect" />
+		</plugin>
+	</plugins>
+
+	<mappers>
+		<mapper resource="mapper/admin/SysUserMapper.xml"/>
+		<mapper resource="mapper/admin/SysRoleMapper.xml"/>
+		<mapper resource="mapper/admin/SysMenuMapper.xml"/>
+		<mapper resource="mapper/admin/SysUserRoleRelMapper.xml"/>
+		<mapper resource="mapper/admin/SysRoleMenuRelMapper.xml"/>
+		<mapper resource="mapper/admin/SysDictItemMapper.xml"/>
+		<mapper resource="mapper/admin/SysDictTypeMapper.xml"/>
+		
+		<mapper resource="mapper/channel/ChannelInfoMapper.xml"/>
+		<mapper resource="mapper/conn/FTPConnInfoMapper.xml"/>
+		<mapper resource="mapper/conn/DataSourceConnMapper.xml"/>
+		
+	</mappers>
+
+</configuration>

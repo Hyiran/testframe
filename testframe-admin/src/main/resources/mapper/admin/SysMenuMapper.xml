@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scloudpay.testframe.admin.sysmgr.dao.SysMenuMapper">
+    
+    <resultMap type="com.scloudpay.testframe.admin.sysmgr.entity.SysMenu" id="sysMenuMap" >
+       <id property="id" column="ID"/>
+       <result property="menuName" column="menu_name"/>
+       <result property="menuUrl" column="menu_url"/>
+       <result property="menuState" column="menu_state"/>
+       <result property="menuLeaf" column="menu_leaf"/>
+       <result property="menuIndex" column="menu_index"/>
+       <result property="menuIcon" column="menu_icon"/>
+       <result property="parent" column="parent"/>
+       <result property="insertTime" column="insert_time"/>
+       <result property="lastUpdateTime" column="last_update_time"/>
+    </resultMap>
+    
+    <sql id="paramsSql1">
+		<if test="parent != null"> and parent=#{parent}</if>
+	</sql>
+	<select id="queryWithPage" resultMap="sysMenuMap">
+       select 
+      	 	ID as id,
+       		menu_name as menuName,
+       		menu_url as menuUrl,
+       		menu_state as menuState,
+       		menu_leaf as menuLeaf,
+       		menu_index as menuIndex,
+       		menu_icon as menuIcon,
+       		parent as parent,
+       		insert_time as insertTime,
+       		last_update_time as lastUpdateTime
+        from sys_menu where 1=1 <include refid="paramsSql1"/>
+    </select>
+	
+	<sql id="paramsSql2">
+		<if test="menuName != null"> and menu_name = #{menuName}</if>
+		<if test="parent != null"> and parent = #{parent}</if>
+		<if test="menuIds != null"> and ID in 
+			<foreach item="menu" index="index" collection="menuIds" open="(" separator="," close=")">  
+			 #{menu}  
+			</foreach> 
+		</if>
+	</sql>
+    <select id="queryByParams" resultMap="sysMenuMap">
+       select 
+      	 	ID as id,
+       		menu_name as menuName,
+       		menu_url as menuUrl,
+       		menu_state as menuState,
+       		menu_leaf as menuLeaf,
+       		menu_index as menuIndex,
+       		menu_icon as menuIcon,
+       		parent as parent,
+       		insert_time as insertTime,
+       		last_update_time as lastUpdateTime
+        from sys_menu where 1=1 <include refid="paramsSql2"/>
+    </select>
+	
+	<select id="getSysMenuById" resultMap="sysMenuMap">
+       select *from sys_menu where ID = #{id}
+    </select>
+    
+    <insert id="insertSysMenu" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysMenu" useGeneratedKeys="true" keyProperty="id"> 
+       insert into 
+          sys_menu(
+          	menu_name,
+       		menu_url,
+       		menu_state,
+       		menu_leaf,
+       		menu_index,
+       		menu_icon,
+       		parent,
+       		insert_time,
+       		last_update_time) 
+       values(
+          	#{menuName},
+       		#{menuUrl},
+       		#{menuState},
+       		#{menuLeaf},
+       		#{menuIndex},
+       		#{menuIcon},
+       		#{parent},
+       		#{insertTime},
+       		#{lastUpdateTime}
+        );
+    </insert>
+    
+    <update id="updateSysMenu" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysMenu">
+        update sys_menu set 
+            menu_name = #{menuName},
+       		menu_url = #{menuUrl},
+       		menu_state = #{menuState},
+       		menu_leaf = #{menuLeaf},
+       		menu_index = #{menuIndex},
+       		menu_icon = #{menuIcon},
+       		parent = #{parent},
+       		insert_time = #{insertTime},
+       		last_update_time = #{lastUpdateTime}
+        where ID=#{id}         
+    </update>
+    
+    <delete id="delSysMenu" parameterType="Long">
+		delete from sys_menu where ID = #{id}
+	</delete>
+    
+</mapper>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AITEST管理系统</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="bootstrap/plugins/bootstrap-table/bootstrap-table.min.css" />
+	<link rel="stylesheet" href="bootstrap/plugins/bootstrap-table/extensions/datetimepicker/daterangepicker-bs3.css" />
+	
+	<link rel="stylesheet" href="resources/css/AdminLTE.min.css" />
+	<link rel="stylesheet" href="resources/css/skins/_all-skins.min.css">
+	<!-- 这个链接下载资源很慢，后面改在下载到本地目录后从本地目录加载
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	 -->
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="resources/css/my.css" />
+	<link rel="stylesheet" href="bootstrap/plugins/validator/css/bootstrapValidator.min.css" />
+	<link href="bootstrap/plugins/datetimepicker/css/foundation-datepicker.css" rel="stylesheet" type="text/css">
+	
+	<script src="resources/js/jQuery-2.1.4.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.serializeJSON.js"></script>
+	<script src="bootstrap/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+	<script src="bootstrap/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script src="bootstrap/plugins/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
+	<script src="bootstrap/plugins/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
+	<script src="bootstrap/plugins/bootstrap-table/extensions/export/bootstrap-table-export.min.js"></script>
+	<script src="bootstrap/plugins/datetimepicker/daterange/moment.js"></script>
+	<script src="bootstrap/plugins/datetimepicker/daterange/daterangepicker.js"></script>
+	<script src="bootstrap/plugins/validator/js/bootstrapValidator.min.js"></script>
+	
+	<script src="bootstrap/plugins/datetimepicker/foundation-datepicker.js"></script>
+	<script src="bootstrap/plugins/datetimepicker/locales/foundation-datepicker.zh-CN.js"></script>		
+		
+	
+	<script src="resources/js/handlebars.js"></script>
+	<script src="resources/js/tableexport.min.js"></script>
+	<script src="resources/js/dict.js"></script>
+	<script src="resources/js/dialog.js"></script>
+	<script src="resources/js/innerhtml.js"></script>
+	<script src="resources/js/app.min.js"></script>
+	<script src="resources/js/common.js"></script>
+	<script src="resources/js/jquery.validate.min.js"></script>
+	<script src="resources/js/form.js"></script>
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini" style="padding-right:2px;">
+    <div class="wrapper">
+
+      <header class="main-header">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <span class="logo-mini">AIT</span>
+          <span class="logo-lg">自动化测试平台</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a class="sidebar-toggle" role="button" data-toggle="offcanvas" href="#">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="resources/img/user3-128x128.jpg" class="user-image" alt="User Image">
+                  <span class="hidden-xs">张三</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="resources/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                    <p>
+                                                          张三- 开发人员
+                      <small>注册时间：2016/8/3</small>
+                    </p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat" id="setPwdBtn">修改密码</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat" id="signOutBtn">退出</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <section class="sidebar">
+          <ul class="sidebar-menu">
+          	<li>
+				<a href="#" id="dashboard">
+				<i class="fa fa-dashboard"></i>
+				<span>首页</span>
+				</a>
+			</li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-table"></i>
+                <span>辅助工具</span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="pages/helptools/produceReconData.html"><i class="fa fa-circle-o"></i>生成第三方对账文件</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-table"></i>
+                <span>挡板程序</span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="pages/member/memberPosition.html"><i class="fa fa-circle-o"></i> 第三方挡板</a></li>
+                <li><a href="pages/member/memberIncome.html"><i class="fa fa-circle-o"></i> 渠道挡板</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-table"></i>
+                <span>连接配置</span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="pages/conn/dataSource.html"><i class="fa fa-circle-o"></i> 数据库连接</a></li>
+                <li><a href="pages/conn/ftp.html"><i class="fa fa-circle-o"></i> FTP连接</a></li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper" id="container-fluid">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>欢迎使用</h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li class="active">工作面板</li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+      
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 1.0.0
+        </div>
+        <strong>Copyright &copy; 2016 <a href="http://www.9fbank.com">微支付</a>.</strong> All rights reserved.
+      </footer>
+    </div><!-- ./wrapper -->
+    
+    
+    <!-- 个人信息模态窗口  -->
+	<div class="modal fade" id="profile_modal" tabindex="-1" role="dialog" aria-labelledby="modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	
+	<!-- 修改密码模态窗口  -->
+	<div class="modal fade" id="setpwd_modal" tabindex="-1" role="dialog" aria-labelledby="modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<form id="setpwd_form" class="form-horizontal">
+						<div class="form-group">
+							<label for="merno" class="control-label col-sm-3">旧密码</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control" id="oldpassword" name="oldpassword" required placeholder="输入原密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="merno" class="control-label col-sm-3">新密码</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control" id="password" name="password" required placeholder="输入新密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="merno" class="control-label col-sm-3">确认新密码</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="再次输入新密码">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="submit" class="btn btn-primary" id="save_pwd_btn">保存</button>
+				</div> 
+			</div>
+		</div>
+	</div>
+	
+	
+    <script type="text/javascript">
+	    $(document).ready(function() {
+	    	$("#dashboard").closest("li").addClass("active");
+	    	//启动加载欢迎页
+	    	$.get("pages/welcome.html",{},function(res){
+    		   if(navigator.userAgent.indexOf("MSIE 8.0")>0){  
+    			   set_innerHTML('container-fluid',res);
+    		   } else{
+    		       $("#container-fluid").html("").append(res);
+    		   }
+    	    });
+	    	
+	    	//设置左侧菜单项点击事件，点击之后加载后侧content wrapper
+	    	$('.treeview-menu').find('a').on("click",function(){
+	    		$('.treeview-menu').find('a').parent("li").removeClass("active");
+	    		$(this).closest("li").addClass("active");
+	    	    var url = $(this).attr("href");
+	    	    $.get(url,{},function(res){
+	    		   if(navigator.userAgent.indexOf("MSIE 8.0")>0){  
+	    			   set_innerHTML('container-fluid',res);
+	    		   } else{
+	    		       $("#container-fluid").html("").append(res);
+	    		   }
+	    	   });
+	    	   return false;
+	        });
+	    	
+	    	//点击首页菜单，加载首页
+	    	$("#dashboard").on("click",function(){
+	    		$(this).removeClass("active");
+	    		$(this).closest("li").addClass("active");
+	    	    $.get("pages/welcome.html",{},function(res){
+	    		   if(navigator.userAgent.indexOf("MSIE 8.0")>0){  
+	    			   set_innerHTML('container-fluid',res);
+	    		   } else{
+	    		       $("#container-fluid").html("").append(res);
+	    		   }
+	    	   });
+	    	   return false;
+	        });
+	    	
+	    	//修改密码表单数据校验
+	    	$("#setpwd_form").validate( {
+				rules: {
+					oldpassword: "required",
+					password: {
+						required: true,
+						minlength: 6
+					},
+					confirm_password: {
+						required: true,
+						minlength: 6,
+						equalTo: "#password"
+					}
+				},
+				messages: {
+					oldpassword: "不能为空",
+					password: {
+						required: "不能为空",
+						minlength: "最小长度为6个字符"
+					},
+					confirm_password: {
+						required: "不能为空",
+						minlength: "最小长度为6个字符",
+						equalTo: "和新密码不相符"
+					}
+				},
+				submitHandler: function(form) {
+					alert("submitted!" );
+				}
+			} );
+	    	
+	    	
+	    	//个人信息模态窗口
+		 	$("#profile_modal").modal({  
+		        remote: "pages/profile.html",
+		        show:false
+		    });
+	    	//点击个人信息
+	    	$(".user-header").on("click",function(){
+		 		var jsonData = JSON.stringify(null);
+		 		$("#profile_form").fillForm(jsonData);
+			    $('#profile_modal').modal('show')
+	        });
+	    	
+	    	//点击修改密码
+	    	$("#setPwdBtn").on("click",function(){
+	    		$("#setpwd_form")[0].reset()
+			    $('#setpwd_modal').modal('show')
+	        });
+	    	
+	    	//保存修改的密码
+	    	$("#save_pwd_btn").on("click",function(){
+	    		box.warnBox({
+					"content":"错误信息内容"
+				});
+	        });
+	    	
+	    	//退出按钮点击事件
+	    	$("#signOutBtn").click(function(){
+	    		window.location.href="login.html";
+	    	});
+	    });
+    </script>
+  </body>
+</html>

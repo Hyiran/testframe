@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>新增FTP连接</title>
+</head>
+<body>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="exampleModalLabel">新增FTP连接</h4>
+	</div>
+	<div class="modal-body">
+		<form id="ftpconn_add_form" role="form" class="form-horizontal">
+		
+			<div class="form-group">
+				<label for="name" class="control-label col-sm-2">连接名称</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="name" name="name"/>
+				</div>
+		    </div>
+		    
+			<div class="form-group">
+				<label for="ipAddress" class="control-label col-sm-2">IP地址</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="ipAddress" name="ipAddress"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="port" class="control-label col-sm-2">端口</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="port" name="port"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="userName" class="control-label col-sm-2">用户名</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="userName" name="userName"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="pwd" class="control-label col-sm-2">密码</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="pwd" name="pwd"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="rootPath" class="control-label col-sm-2">根目录</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="rootPath" name="rootPath"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="memo" class="control-label col-sm-2">备注</label>
+				<div class="col-sm-9">
+					<textarea class="form-control " id="memo" name="memo"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		<button type="button" class="btn btn-primary" id="save_ftpconn_btn">保存</button>
+	</div> 
+	
+	<script type="text/javascript">
+		 $(function() {
+			
+			//保存按钮点击事件
+			$("#save_ftpconn_btn").click(function(){
+				$('#ftpconn_add_form').submit();
+			});
+			//点击取消按钮，清楚表单验证
+			$('#add_ftpconn_modal').on('hide.bs.modal', function () {
+				$('#ftpconn_add_form').data('bootstrapValidator').resetForm(true);
+			});
+			//表单验证，验证通过之后执行ajax提交表单，新增数据
+			$('#ftpconn_add_form').bootstrapValidator({
+						message : '值无效',
+						feedbackIcons : {
+							valid : 'glyphicon glyphicon-ok',
+							invalid : 'glyphicon glyphicon-remove',
+							validating : 'glyphicon glyphicon-refresh'
+						},
+						fields : {
+							name : {
+								message : '连接名称无效',
+								validators : {
+									notEmpty : {
+										message : '连接名称不能为空'
+									},
+									stringLength : {
+										min : 6,
+										max : 30,
+										message : '连接名称长度为6-30个字符'
+									},
+									regexp : {
+										regexp : /^[a-zA-Z0-9_\.]+$/,
+										message : '连接名称只能包含字母、数字和下划线'
+									}
+								}
+							},
+							port : {
+								validators : {
+									notEmpty : {
+										message : '端口不能为空'
+									}
+								}
+							},
+							userName : {
+								validators : {
+									notEmpty : {
+										message : '用户名不能为空'
+									}
+								}
+							},
+							pwd : {
+								validators : {
+									notEmpty : {
+										message : '密码不能为空'
+									}
+								}
+							},
+							ipAddress : {
+								validators : {
+									notEmpty : {
+										message : 'IP地址不能为空'
+									}
+								}
+							},
+							memo : {
+								validators : {
+									stringLength : {
+										max : 200,
+										message : '备注长度不能超过200个字符'
+									}
+								}
+							}
+						}
+					}).on(
+					'success.form.bv',function(e) {
+						// ajax提交，新增数据
+						var postData = JSON.stringify($("#ftpconn_add_form").serializeJSON());
+						$.ajax({
+							url : "conn/ftp/add?t="
+									+ (new Date()).valueOf(),
+							method : "POST",
+							contentType : "application/json",
+							dataType : "json",
+							data : postData,
+							async : false,
+							success : function(data) {
+								if (data.success) {
+									Dialog.alert("操作成功");
+									$('#add_ftpconn_modal').modal('hide')
+									$("#table").bootstrapTable('refresh');
+								} else {
+									Dialog.alert("操作失败");
+								}
+							},
+							error : function(XMLHttpRequest, textStatus,
+									errorThrown) {
+								var result = JSON
+										.parse(XMLHttpRequest.responseText);
+								box.warnBox({
+									"content" : result.errorMessage
+								});
+							}
+						});
+					});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scloudpay.testframe.admin.conn.dao.DataSourceConnMapper" >
+  <resultMap id="BaseResultMap" type="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="port" property="port" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="db_name" property="dbName" jdbcType="VARCHAR" />
+    <result column="statu" property="statu" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, name, ip_address, port, user_name, pwd,db_name, statu, memo
+  </sql>
+  
+  <sql id="paramsSql1">
+	<if test="condition != null"> 
+		<![CDATA[and name like #{condition}]]>
+	</if>
+  </sql>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+		<![CDATA[
+		select
+		id as id, 
+		name as name, 
+		ip_address as ipAddress, 
+		port as port, 
+		user_name as userName, 
+		pwd as pwd, 
+		db_name as dbName, 
+    	statu as statu, 
+    	memo as memo
+		from conn_datasource]]>
+	</select>
+  
+  <select id="queryWithPage" resultMap="BaseResultMap">
+		<![CDATA[
+		select
+		id as id, 
+		name as name, 
+		ip_address as ipAddress, 
+		port as port, 
+		user_name as userName, 
+		pwd as pwd, 
+		db_name as dbName, 
+    	statu as statu, 
+    	memo as memo
+		from conn_datasource where 1=1 ]]>
+		<include refid="paramsSql1" />
+	</select>
+	
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from conn_datasource
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from conn_datasource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+    insert into conn_datasource (id, name, ip_address, 
+      port, user_name, pwd, 
+      statu, memo)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{ipAddress,jdbcType=VARCHAR}, 
+      #{port,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+      #{statu,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+    insert into conn_datasource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="ipAddress != null" >
+        ip_address,
+      </if>
+      <if test="port != null" >
+        port,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="statu != null" >
+        statu,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null" >
+        #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        #{port,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="statu != null" >
+        #{statu,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+    update conn_datasource
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null" >
+        ip_address = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        port = #{port,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="statu != null" >
+        statu = #{statu,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+    update conn_datasource
+    set name = #{name,jdbcType=VARCHAR},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      statu = #{statu,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

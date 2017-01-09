@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scloudpay.testframe.admin.sysmgr.dao.SysRoleMenuRelMapper">
+    
+    <resultMap type="com.scloudpay.testframe.admin.sysmgr.entity.SysRoleMenuRel" id="sysSysRoleMenuRelMap" >
+       <id property="id" column="ID"/>
+       <result property="menuId" column="menu_id"/>
+       <result property="roleId" column="role_id"/>
+    </resultMap>
+    
+    <sql id="paramsSql2">
+		<if test="menuId != null"> and menu_id = #{menuId}</if>
+		<if test="roleId != null"> and role_id = #{roleId}</if>
+	</sql>
+    <select id="queryByParams" resultMap="sysSysRoleMenuRelMap">
+       select 
+      	 	ID as id,
+       		menu_id as menuId,
+       		role_id as roleId
+        from sys_role_menu_rel where 1=1 <include refid="paramsSql2"/>
+    </select>
+    
+    <insert id="insertRoleMenuRel" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysRoleMenuRel" useGeneratedKeys="true" keyProperty="id"> 
+       insert into 
+          sys_role_menu_rel(
+          	menu_id,
+       		role_id) 
+       values(
+          	#{menuId},
+       		#{roleId}
+        );
+    </insert>
+    
+    <delete id="delByRoleId" parameterType="Long">
+		delete from sys_role_menu_rel where role_id = #{roleId}
+	</delete>
+    
+</mapper>

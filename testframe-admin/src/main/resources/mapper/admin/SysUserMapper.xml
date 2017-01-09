@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scloudpay.testframe.admin.sysmgr.dao.SysUserMapper">
+
+	<resultMap type="com.scloudpay.testframe.admin.sysmgr.entity.SysUser" id="sysUserMap">
+		<id property="id" column="ID" />
+		<result property="loginName" column="login_name" />
+		<result property="loginPwd" column="login_pwd" />
+		<result property="trueName" column="true_name" />
+		<result property="idNo" column="idno" />
+		<result property="mobile" column="mobile" />
+		<result property="address" column="address" />
+		<result property="userMail" column="user_mail" />
+		<result property="userState" column="user_state" />
+		<result property="lastLoginTime" column="last_login_time" />
+		<result property="insertTime" column="insert_time" />
+		<result property="lastUpdateTime" column="last_update_time" />
+	</resultMap>
+
+	<sql id="paramsSql1">
+		<if test="condition != null"> 
+			<![CDATA[
+			and login_name like #{condition} or true_name like
+			#{condition} or idno like #{condition} or mobile like #{condition} or
+			mobile like #{condition} or address like #{condition} or user_mail
+			like #{condition}
+			]]>
+		</if>
+	</sql>
+	<select id="queryWithPage" resultMap="sysUserMap">
+		<![CDATA[
+		select
+		ID as id,
+		login_name as loginName,
+		login_pwd as loginPwd,
+		true_name as trueName,
+		idno as idNo,
+		mobile as mobile,
+		address as address,
+		user_mail as userMail,
+		user_state as userState,
+		last_login_time as lastLoginTime,
+		insert_time as insertTime,
+		last_update_time as lastUpdateTime
+		from sys_user where 1=1 ]]>
+		<include refid="paramsSql1" />
+	</select>
+	
+	
+	<sql id="paramsSql2">
+    	<if test="loginName != null"> and login_name = #{loginName}</if>
+		<if test="loginPwd != null"> and login_pwd = #{loginPwd}</if>
+	</sql>
+    <select id="queryByParams" resultMap="sysUserMap">
+       select
+		ID as id,
+		login_name as loginName,
+		login_pwd as loginPwd,
+		true_name as trueName,
+		idno as idNo,
+		mobile as mobile,
+		address as address,
+		user_mail as userMail,
+		user_state as userState,
+		last_login_time as lastLoginTime,
+		insert_time as insertTime,
+		last_update_time as lastUpdateTime
+		from sys_user where 1=1  <include refid="paramsSql2"/>
+    </select>
+
+	<select id="getSysUserById" resultMap="sysUserMap">
+		<![CDATA[ select *from sys_user where ID = #{id}]]>
+	</select>
+
+	<insert id="insertSysUser" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysUser"
+		useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+		insert into
+		sys_user(
+			login_name,
+			login_pwd,
+			true_name,
+			idno,
+			mobile,
+			address,
+			user_mail,
+			user_state,
+			last_login_time,
+			insert_time,
+			last_update_time)
+		values(
+			#{loginName},
+			#{loginPwd},
+			#{trueName},
+			#{idNo},
+			#{mobile},
+			#{address},
+			#{userMail},
+			#{userState},
+			#{lastLoginTime},
+			#{insertTime},
+			#{lastUpdateTime}
+			);]]>
+	</insert>
+
+	<update id="updateSysUser" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysUser">
+		<![CDATA[
+		update sys_user set
+		login_name = #{loginName},
+		login_pwd = #{loginPwd},
+		true_name = #{trueName},
+		idno = #{idNo},
+		mobile = #{mobile},
+		address = #{address},
+		user_mail = #{userMail},
+		user_state = #{userState},
+		last_login_time = #{lastLoginTime},
+		insert_time = #{insertTime},
+		last_update_time = #{lastUpdateTime}
+		where ID=#{id}]]>
+	</update>
+
+	<delete id="delSysUser" parameterType="Long">
+		<![CDATA[delete from sys_user where ID = #{id}]]>
+	</delete>
+
+</mapper>

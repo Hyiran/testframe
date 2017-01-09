@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scloudpay.testframe.admin.sysmgr.dao.SysDictItemMapper">
+    
+    <resultMap type="com.scloudpay.testframe.admin.sysmgr.entity.SysDictItem" id="sysDictItemMap" >
+       <id property="id" column="ID"/>
+       <result property="itemCode" column="item_code"/>
+       <result property="itemName" column="item_name"/>
+       <result property="sortIndex" column="sort_index"/>
+       <result property="typeCode" column="type_code"/>
+       <result property="className" column="class_name"/>
+       <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <sql id="paramsSql1">
+		<if test="typeCode != null"> and type_code like #{typeCode}</if>
+	</sql>
+	<select id="queryWithPage" resultMap="sysDictItemMap">
+       select 
+      	 	ID as id,
+       		item_code as itemCode,
+       		item_name as itemName,
+       		sort_index as sortIndex,
+       		type_code as typeCode,
+       		class_name as className,
+       		remark as remark
+        from sys_dict_item where 1=1 <include refid="paramsSql1"/>
+    </select>
+	
+	<sql id="paramsSql2">
+		<if test="itemCode != null"> and item_code = #{itemCode}</if>
+		<if test="typeCode != null"> and type_code = #{typeCode}</if>
+	</sql>
+    <select id="queryByParams" resultMap="sysDictItemMap">
+       select 
+      	 	ID as id,
+       		item_code as itemCode,
+       		item_name as itemName,
+       		sort_index as sortIndex,
+       		type_code as typeCode,
+       		class_name as className,
+       		remark as remark
+        from sys_dict_item where 1=1 <include refid="paramsSql2"/>
+    </select>
+	
+	<select id="getDictItemById" resultMap="sysDictItemMap">
+       select *from sys_dict_item where ID = #{id}
+    </select>
+    
+    <select id="getDictItem" resultMap="sysDictItemMap">
+       select *from sys_dict_item where type_code = #{typeCode} and item_code = #{itemCode}
+    </select>
+    
+    <insert id="insertDictItem" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysDictItem" useGeneratedKeys="true" keyProperty="id"> 
+       insert into 
+          sys_dict_item(
+          	item_code,
+       		item_name,
+       		sort_index,
+       		type_code,
+       		class_name,
+       		remark) 
+       values(
+          	#{itemCode},
+       		#{itemName},
+       		#{sortIndex},
+       		#{typeCode},
+       		#{className},
+       		#{remark}
+        );
+    </insert>
+    
+    <update id="updateDictItem" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysDictItem">
+        update sys_dict_item set 
+            item_code = #{itemCode},
+       		item_name = #{itemName},
+       		sort_index = #{sortIndex},
+       		type_code = #{typeCode},
+       		class_name = #{className},
+       		remark = #{remark}
+        where ID=#{id}         
+    </update>
+    
+    <delete id="delDictItem" parameterType="Long">
+		delete from sys_dict_item where ID = #{id}
+	</delete>
+    
+</mapper>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>生成对账数据</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+			辅助工具
+			<small>生成第三方对账文件</small>
+			</h1>
+		</section>
+
+		<section class="content">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							对账数据生成配置定义
+						</div>
+						<div class="panel-body">
+							<form id="formSearch" class="form-horizontal">
+								<div class="form-group" style="margin-top: 5px">
+									<label class="control-label col-sm-2" for="txt_search_statu">选择渠道</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="channelNo" name="channelNo">
+											<option value="">全部</option>
+											<script id="fundchannel_select_template" type="text/x-handlebars-template">
+						   					{{#each data}}
+                           					<option value="{{channelCode}}">{{channelName}}</option>
+						   					{{/each}}
+                           					</script>
+										</select>
+									</div>
+									<label class="control-label col-sm-2" for="txt_search_statu">交易日期</label>
+									<div class="col-sm-2">
+										<input type="text"  name="tradeDate" id="demo-1" class="form-control" readonly="readonly">
+									</div>
+									<!--  
+									<label class="control-label col-sm-1" for="txt_search_statu">FTP</label>
+									<div class="col-sm-2">
+										<input type="text" class="form-control" name="ftpConfigId" value="1">
+									</div>
+									-->
+									<label class="control-label col-sm-2" for="txt_search_statu">选择FTP</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="ftpConfig" name="ftpConfigId">
+											<option value="">全部</option>
+											<script id="ftp_select_template" type="text/x-handlebars-template">
+						   					{{#each data}}
+                           					<option value="{{id}}">{{name}}</option>
+						   					{{/each}}
+                           					</script>
+										</select>
+									</div>
+									
+								</div>
+								
+								
+								<div class="form-group" style="margin-top: 5px">
+									<label class="control-label col-sm-2" for="txt_search_statu">渠道订单数据源</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="dbConfig" name="dataSourceId">
+											<option value="">全部</option>
+											<script id="db_select_template" type="text/x-handlebars-template">
+						   					{{#each data}}
+                           					<option value="{{id}}">{{name}}</option>
+						   					{{/each}}
+                           					</script>
+										</select>
+									</div>
+									
+									<div class="col-sm-4">
+										<button type="button" id="btn_create" class="btn btn-primary">创建并上传</button>
+										<button type="button" id="btn_rest" class="btn btn-primary">重置</button>
+									</div>
+									<!--  
+									<label class="control-label col-sm-1" for="recon_error_select1">定义数据</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="recon_error_select1" name="recon_error1">
+											<option value="">全部</option>
+											<script id="recon_error_select_template1" type="text/x-handlebars-template">
+						   					{{#each data}}
+                           					<option value="{{itemCode}}">{{itemName}}</option>
+						   					{{/each}}
+                           					</script>
+										</select>
+									</div>
+									<div class="col-sm-1">
+										<input type="text" class="form-control" id="recon_error_select2" value="0" name="recon_error1_val">
+									</div>
+									<div class="col-sm-2">
+										<select class="form-control" id="recon_error_select2" name="recon_error2">
+											<option value="">全部</option>
+											<script id="recon_error_select_template2" type="text/x-handlebars-template">
+						   					{{#each data}}
+                           					<option value="{{itemCode}}">{{itemName}}</option>
+						   					{{/each}}
+                           					</script>
+										</select>
+									</div>
+									<div class="col-sm-1">
+										<input type="text" class="form-control" id="recon_error_select3" value="0" name="recon_error2_val">
+									</div>
+									<div class="col-sm-2">
+										<select class="form-control" id="recon_error_select3" name="recon_error3">
+											<option value="">全部</option>
+											<script id="recon_error_select_template3" type="text/x-handlebars-template">
+						   					{{#each data}}
+                           					<option value="{{itemCode}}">{{itemName}}</option>
+						   					{{/each}}
+                           					</script>
+										</select>
+									</div>
+									<div class="col-sm-1">
+										<input type="text" class="form-control" id="condition_txt" value="0" name="recon_error3_val">
+									</div>
+									-->
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							对账数据生成结果输出
+						</div>
+						<div class="panel-body" id="result">
+							无
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	
+	<script>
+		
+		//获取渠道下拉列表
+		$.ajax({
+			url : "channel/all?t="+(new Date()).valueOf(),
+			method : "POST",
+			dataType : "json",
+			async : false,
+			success : function(data) {
+				var templateHtml = $("#fundchannel_select_template").html();
+				var template = Handlebars.compile(templateHtml);
+				var html = template(data);
+				$("#channelNo").append(html);
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				var result = JSON.parse(XMLHttpRequest.responseText);
+				box.warnBox({
+					"content":result.errorMessage
+				});
+			}
+		});
+		
+		//加载FTP连接信息
+		$.ajax({
+			url : "conn/ftp/all?t="+(new Date()).valueOf(),
+			method : "POST",
+			dataType : "json",
+			async : false,
+			success : function(data) {
+				var templateHtml = $("#ftp_select_template").html();
+				var template = Handlebars.compile(templateHtml);
+				var html = template(data);
+				$("#ftpConfig").append(html);
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				var result = JSON.parse(XMLHttpRequest.responseText);
+				box.warnBox({
+					"content":result.errorMessage
+				});
+			}
+		});
+		
+		//加载渠道订单数据源连接
+		$.ajax({
+			url : "conn/db/all?t="+(new Date()).valueOf(),
+			method : "POST",
+			dataType : "json",
+			async : false,
+			success : function(data) {
+				var templateHtml = $("#db_select_template").html();
+				var template = Handlebars.compile(templateHtml);
+				var html = template(data);
+				$("#dbConfig").append(html);
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				var result = JSON.parse(XMLHttpRequest.responseText);
+				box.warnBox({
+					"content":result.errorMessage
+				});
+			}
+		});
+		
+		/**
+		//获取订单状态字典项
+		dictCache.getDictItemsCallBack("RECON_ERROR_TYPE",function(data){
+			var templateHtml1 = $("#recon_error_select_template1").html();
+			var template1 = Handlebars.compile(templateHtml1);
+			var html1 = template1(data);
+			$("#recon_error_select1").append(html1);
+		});
+		
+		dictCache.getDictItemsCallBack("RECON_ERROR_TYPE",function(data){
+			var templateHtml2 = $("#recon_error_select_template2").html();
+			var template2 = Handlebars.compile(templateHtml2);
+			var html2 = template2(data);
+			$("#recon_error_select2").append(html2);
+		});
+		
+		dictCache.getDictItemsCallBack("RECON_ERROR_TYPE",function(data){
+			var templateHtml3 = $("#recon_error_select_template3").html();
+			var template3 = Handlebars.compile(templateHtml3);
+			var html3 = template3(data);
+			$("#recon_error_select3").append(html3);
+		});**/
+		
+		$(function() {
+			
+			//生成按钮点击事件
+			$("#btn_create").click(function(){
+				var formData = $("#formSearch").serializeJSON();
+				var dataParams = JSON.stringify($("#formSearch").serializeJSON());
+				if(null == formData.channelNo || undefined == formData.channelNo || "" == formData.channelNo){
+					Dialog.alert('"渠道"不能为空');
+					return;
+				}
+				if(null == formData.tradeDate || undefined == formData.tradeDate || "" == formData.tradeDate){
+					Dialog.alert('"交易日期"不能为空');
+					return;
+				}
+				if(null == formData.dataSourceId || undefined == formData.dataSourceId || "" == formData.dataSourceId){
+					Dialog.alert('"渠道订单数据源"不能为空');
+					return;
+				}
+				$("#result").html("正在生成数据......");
+				$.ajax({
+					url : "ht/rd/produce",
+					method : "POST",
+					contentType : "application/json",
+					dataType : "json",
+					data:dataParams,
+					async : false,
+					success : function(data) {
+						if(data.success){
+							if(data.data.count > 0){
+								$("#result").html(data.data.msg+"&nbsp;&nbsp;&nbsp;&nbsp;<a href='ht/rd/dowload?path="+data.data.filepath+"'>下载文件</a>");
+							}else{
+								$("#result").html(data.data.msg);
+							}
+						}else{
+							$("#result").html(data.errorMsg);
+						}
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						var result = JSON.parse(XMLHttpRequest.responseText);
+						$("#result").html(result.errorMessage);
+					}
+				});
+			});
+			
+		 	//重置按钮点击事件
+			$("#btn_rest").click(function(){
+				$("#formSearch")[0].reset();
+			});
+			
+		});
+		
+		$('#demo-1').fdatepicker({
+			format: 'yyyymmdd'
+		});
+		
+</script>
+</body>
+</html>

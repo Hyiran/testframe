@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>欢迎使用后台管理系统</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/AdminLTE.min.css" />
+	<link rel="stylesheet" href="resources/css/skins/_all-skins.min.css">
+	
+    <script src="resources/js/jQuery-2.1.4.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.serializeJSON.js"></script>
+	<style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        max-width: 500px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading">欢迎使用后台管理系统</h2>
+        <label for="inputUsername" class="sr-only">用户名</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="请输入用户名" name="username" required autofocus/>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="请输入密码" name="password" required/>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="1" name="remember"> 记住我
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="button" id="loginBtn" >登录</button>
+      </form>
+
+    </div> <!-- /container -->
+	<script type="text/javascript">
+	 	$(document).ready(function() {
+	 		 $("#loginBtn").click(function (data) {
+	 			 window.location.href="index.html";
+ 			 });
+	    });
+	</script>
+  </body>
+</html>

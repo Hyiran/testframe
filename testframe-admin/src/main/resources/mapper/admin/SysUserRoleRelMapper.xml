@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scloudpay.testframe.admin.sysmgr.dao.SysUserRoleRelMapper">
+    
+    <resultMap type="com.scloudpay.testframe.admin.sysmgr.entity.SysUserRoleRel" id="sysSysUserRoleRelMap" >
+       <id property="id" column="ID"/>
+       <result property="userId" column="user_id"/>
+       <result property="roleId" column="role_id"/>
+    </resultMap>
+    
+    <sql id="paramsSql2">
+		<if test="userId != null"> and user_id = #{userId}</if>
+		<if test="roleId != null"> and role_id = #{roleId}</if>
+	</sql>
+    <select id="queryByParams" resultMap="sysSysUserRoleRelMap">
+       select 
+      	 	ID as id,
+       		user_id as userId,
+       		role_id as roleId
+        from sys_user_role_rel where 1=1 <include refid="paramsSql2"/>
+    </select>
+    
+    <insert id="insertUserRoleRel" parameterType="com.scloudpay.testframe.admin.sysmgr.entity.SysUserRoleRel" useGeneratedKeys="true" keyProperty="id"> 
+       insert into 
+          sys_user_role_rel(
+          	user_id,
+       		role_id) 
+       values(
+          	#{userId},
+       		#{roleId}
+        );
+    </insert>
+    
+    <delete id="delByUserId" parameterType="Long">
+		delete from sys_user_role_rel where user_id = #{userId}
+	</delete>
+    
+</mapper>

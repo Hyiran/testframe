@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>后台管理系统</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				个人信息
+			</h1>
+		</section>
+
+		<section class="content">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<form id="formSearch" class="form-horizontal">
+								<div class="form-group" style="margin-top: 5px">
+									<label class="control-label col-sm-1" for="txt_search_departmentname">模糊匹配</label>
+									<div class="col-sm-5">
+										<input type="text" class="form-control" id="condition_txt" placeholder="输入商户号、会员号、订单号模糊查询">
+									</div>
+									<label class="control-label col-sm-1" for="txt_search_statu">订单状态</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="order_status">
+											<option value="">全部</option>
+											<script id="orderstatus_select_template" type="text/x-handlebars-template">
+						   					{{#each data}}
+                           					<option value="{{itemCode}}">{{itemName}}</option>
+						   					{{/each}}
+                           					</script>
+										</select>
+									</div>
+									<label class="control-label col-sm-1" for="txt_search_statu">基金渠道</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="fund_channel">
+											<option value="">全部</option>
+											<script id="fundchannel_select_template" type="text/x-handlebars-template">
+						   					{{#each data}}
+                           					<option value="{{channelCode}}">{{channelName}}</option>
+						   					{{/each}}
+                           					</script>
+										</select>
+									</div>
+								</div>
+								<div class="form-group" style="margin-top: 5px">
+									<label class="control-label col-sm-1"
+										for="txt_search_departmentname">起止日期</label>
+									<div class="col-sm-5">
+										<div class="input-prepend input-group">
+											<span class="add-on input-group-addon">
+											<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+											</span> 
+											<input type="hidden" id="purStartTime"/>
+											<input type="hidden" id="purEndTime"/>
+											<input type="text" id="purStartEndTime" class="form-control" value="" class="span4" readonly="readonly"/>
+										</div>
+									</div>
+									<div class="col-sm-2" style="text-align: left;">
+										<button type="button" id="btn_query" class="btn btn-primary">查询</button>
+										<button type="button" id="btn_rest" class="btn btn-primary">重置</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	
+	<script>
+		$(function() {
+			
+		});
+</script>
+</body>
+</html>
