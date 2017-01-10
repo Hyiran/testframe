@@ -7,7 +7,7 @@
  * <b>Copyright (c)</b> 2017 9FBank.com 玖富公司-版权所有<br/>
  *
  */
-package com.scloudpay.testframe.mock.server;
+package com.scloudpay.testframe.mock.third;
 
 /**
  *
@@ -21,7 +21,7 @@ package com.scloudpay.testframe.mock.server;
  */
 public interface ServerMock {
 	
-	public void start();
+	public void start(int port);
 	
 	public void stop();
 
