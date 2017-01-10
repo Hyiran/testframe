@@ -7,7 +7,7 @@
  * <b>Copyright (c)</b> 2017 9FBank.com 玖富公司-版权所有<br/>
  *
  */
-package com.scloudpay.testframe.mock;
+package com.scloudpay.testframe.mock.channel;
 
 
 import static org.mockito.Mockito.mock;
@@ -31,7 +31,7 @@ import com.ninefbank.smallpay.channel.api.vo.daikou.DPayReqVo;
  * @version 1.0.0
  *
  */
-public class ChannelDaiKouMock extends ChannelMock {
+public class DaiKouMock extends ChannelMock {
 	
 	/**
 	 * mockDKSuccess(模拟渠道系统代扣成功)<br/>
@@ -96,7 +96,7 @@ public class ChannelDaiKouMock extends ChannelMock {
 		req.setChannelCode("BF01");
 		req.setOrderNo("P00012017011000001");
 		
-		IDaikouFacade facade = ChannelDaiKouMock.mockDKSuccess(req);
+		IDaikouFacade facade = DaiKouMock.mockDKSuccess(req);
 		DPayRepVo res = facade.pay(req);
 		
 		System.out.println(res.getChannelOrderNo());

@@ -7,7 +7,7 @@
  * <b>Copyright (c)</b> 2017 9FBank.com 玖富公司-版权所有<br/>
  *
  */
-package com.scloudpay.testframe.mock;
+package com.scloudpay.testframe.mock.channel;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,7 +26,7 @@ import com.ninefbank.smallpay.channel.api.vo.quick.SignReqVo;
  * @version 1.0.0
  *
  */
-public class ChannelQuickPayMock extends ChannelMock {
+public class QuickPayMock extends ChannelMock {
 	
 	/**
 	 * mockSignSuccess(这里用一句话描述这个方法的作用)<br/>
