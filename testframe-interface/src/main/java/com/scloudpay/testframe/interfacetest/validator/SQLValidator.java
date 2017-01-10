@@ -22,6 +22,8 @@ import com.scloudpay.testframe.interfacetest.bean.ValidatorMessage;
  *
  */
 public class SQLValidator implements Validator {
+	
+	
 
 	public ValidatorMessage validate(Object sql) {
 		return null;

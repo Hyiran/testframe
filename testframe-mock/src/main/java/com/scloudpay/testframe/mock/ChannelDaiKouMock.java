@@ -14,18 +14,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import org.junit.Test;
 
 import com.ninefbank.smallpay.channel.api.server.IDaikouFacade;
 import com.ninefbank.smallpay.channel.api.vo.daikou.DPayRepVo;
 import com.ninefbank.smallpay.channel.api.vo.daikou.DPayReqVo;
-import com.ninefbank.smallpay.channel.common.enums.EnumTradeStatus;
 
 /**
  *
- * ChannelDaiKouMock
+ * ChannelDaiKouMock 渠道系统代扣模拟
  * 
  * @author TanDong
  * 2017年1月10日 上午9:40:40
@@ -35,51 +33,59 @@ import com.ninefbank.smallpay.channel.common.enums.EnumTradeStatus;
  */
 public class ChannelDaiKouMock extends ChannelMock {
 	
-	public DPayRepVo mockDKSuccess(DPayReqVo req){
-		
-		//设置返回值
-		DPayRepVo res = new DPayRepVo();
-		res.setChannelOrderNo(req.getOrderNo());
-		res.setAmount(req.getAmount());
-		res.setBankFinishTime(new Date(System.currentTimeMillis()));
-		res.setBankRtnCode("100000");
-		res.setChannelFinishTime(new Date(System.currentTimeMillis()));
-		res.setBankRtnMsg("交易成功");
-		res.setInstCode("BF01");
-		res.setInterCode("BF01");
-		res.setTradeStatus(EnumTradeStatus.SUCCESS);
+	/**
+	 * mockDKSuccess(模拟渠道系统代扣成功)<br/>
+	 * @param req
+	 * @return
+	 * DPayRepVo
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static IDaikouFacade mockDKSuccess(DPayReqVo req){
 		
 		IDaikouFacade daikouFacade = mock(IDaikouFacade.class);  
-		when(daikouFacade.pay(req)).thenReturn(res); 
+		when(daikouFacade.pay(req)).thenReturn(buildSuccessRes(req)); 
 		
-		return res;
+		return daikouFacade;
 	}
 	
-	public DPayRepVo mockDKError(DPayReqVo req){
+	/**
+	 * mockDKError(模拟渠道系统代扣失败)<br/>
+	 * @param req
+	 * @return
+	 * DPayRepVo
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static IDaikouFacade mockDKError(DPayReqVo req){
 		
-		//设置返回值
-		DPayRepVo res = new DPayRepVo();
-		res.setChannelOrderNo(req.getOrderNo());
-		res.setAmount(req.getAmount());
-		res.setBankFinishTime(new Date(System.currentTimeMillis()));
-		res.setBankRtnCode("100000");
-		res.setChannelFinishTime(new Date(System.currentTimeMillis()));
-		
-		IDaikouFacade daikouFacade = mock(IDaikouFacade.class);  
-		when(daikouFacade.pay(req)).thenReturn(res); 
-		
-		return res;
+		IDaikouFacade facade = mock(IDaikouFacade.class);  
+		when(facade.pay(req)).thenReturn(buildErrorRes(req)); 
+		return facade;
 	}
 	
-	public DPayRepVo mockDKTimeOut(DPayReqVo req, long time){
+	/**
+	 * mockDKTimeOut(模拟渠道系统代扣超时)<br/>
+	 * @param req
+	 * @param time
+	 * @return
+	 * DPayRepVo
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static IDaikouFacade mockDKTimeOut(DPayReqVo req, long time){
 		
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return this.mockDKSuccess(req);
+		IDaikouFacade facade = mock(IDaikouFacade.class);  
+		when(facade.pay(req)).thenReturn(buildSuccessRes(req)); 
+		return facade;
 	}
+	
+	
 	
 	@Test
 	public void test(){
@@ -90,8 +96,8 @@ public class ChannelDaiKouMock extends ChannelMock {
 		req.setChannelCode("BF01");
 		req.setOrderNo("P00012017011000001");
 		
-		ChannelDaiKouMock dkMock = new ChannelDaiKouMock();
-		DPayRepVo res = dkMock.mockDKSuccess(req);
+		IDaikouFacade facade = ChannelDaiKouMock.mockDKSuccess(req);
+		DPayRepVo res = facade.pay(req);
 		
 		System.out.println(res.getChannelOrderNo());
 	}

@@ -9,9 +9,12 @@
  */
 package com.scloudpay.testframe.interfacetest.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
- * ValidatorChain
+ * ValidatorChain 测试结果校验链
  * 
  * @author TanDong
  * 2017年1月9日 下午6:14:56
@@ -20,5 +23,13 @@ package com.scloudpay.testframe.interfacetest.validator;
  *
  */
 public class ValidatorChain {
+	
+	private List<Validator> validatorChain = new ArrayList<Validator>();
+	
+	public void validate(){
+		for(Validator v : validatorChain){
+			v.validate();
+		}
+	}
 
 }
