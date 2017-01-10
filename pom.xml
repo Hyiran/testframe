@@ -12,5 +12,6 @@
     <module>testframe-examples</module>
     <module>testframe-common</module>
     <module>testframe-examples-api</module>
+    <module>testframe-mock</module>
   </modules>
 </project>
