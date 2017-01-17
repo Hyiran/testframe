@@ -147,17 +147,16 @@
 		            align: 'left',
 		            valign: 'top',
 		            sortable: false
-		        }/*, {
+		        }, {
 		            field: 'operate',
 		            title: '操作',
 		            width: 100,
 		            align: 'center',
 		            formatter:function(value,row,index){  
-	                    var e = '<a href="#" mce_href="#" onclick="edit(\''+ row.id + '\')">编辑</a> ';  
-	                    var d = '<a href="#" mce_href="#" onclick="del(\''+ row.id +'\')">删除</a> ';  
+	                    var e = '<a href="#" mce_href="#" onclick="executeTest(\''+ row.id + '\')">执行测试</a> ';  
                         return e+d;  
                     } 
-		        }*/],
+		        }],
 		
 		        onLoadSuccess:function(){
 		        },
