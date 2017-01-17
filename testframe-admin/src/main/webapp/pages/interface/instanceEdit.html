@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>编辑接口测试实例</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="exampleModalLabel">编辑</h4>
+	</div>
+	<div class="modal-body">
+		<form id="dbconn_edit_form" class="form-horizontal">
+			<input type="hidden" name="id" id="id" /> 
+			<div class="form-group">
+				<label for="merno" class="control-label col-sm-3">实例名称</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="name" name="name">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="memNo" class="control-label col-sm-3">接口名</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="apiName" name="apiName">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="orderNo" class="control-label col-sm-3">方法名</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="method" name="method">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="purAmount" class="control-label col-sm-3">返回值校验规则</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="returnRuleId" name="returnRuleId">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="fundChannel" class="control-label col-sm-3">SQL校验规则</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="sqlRuleId" name="sqlRuleId">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="remark" class="control-label col-sm-3">自定义校验规则</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control " id="custRuleId" name="custRuleId"></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="remark" class="control-label col-sm-3">备注</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control " id="memo" name="memo"></input>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		<button type="button" class="btn btn-primary" id="save_dataSource_btn">保存</button>
+		<!--  
+		<button type="submit" class="btn btn-primary" id="save_dataSource_btn2">submit</button>
+		-->
+	</div>
+
+	<script type="text/javascript">
+		$(function() {
+
+			//保存按钮点击事件
+			$("#save_dataSource_btn").click(
+					function() {
+						var postData = JSON.stringify($("#dbconn_edit_form").serializeJSON());
+						$.ajax({
+							url : "conn/db/update?t="
+									+ (new Date()).valueOf(),
+							method : "POST",
+							contentType : "application/json",
+							dataType : "json",
+							data : postData,
+							async : false,
+							success : function(data) {
+								if (data.success) {
+									Dialog.alert("操作成功");
+									$('#edit_dbconn_modal').modal('hide')
+									$("#table").bootstrapTable('refresh');
+								} else {
+									Dialog.alert("操作失败");
+								}
+							},
+							error : function(XMLHttpRequest, textStatus,
+									errorThrown) {
+								var result = JSON
+										.parse(XMLHttpRequest.responseText);
+								box.warnBox({
+									"content" : result.errorMessage
+								});
+							}
+						});
+					});
+		});
+	</script>
+</body>
+</html>

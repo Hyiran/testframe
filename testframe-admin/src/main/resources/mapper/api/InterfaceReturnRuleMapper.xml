@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scloudpay.testframe.interfacetest.dao.InterfaceReturnRuleMapper">
+	
+	<resultMap id="BaseResultMap"
+		type="com.scloudpay.testframe.interfacetest.entity.InterfaceReturnRule">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="rule_type" property="ruleType" jdbcType="INTEGER" />
+		<result column="expression" property="expression" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, name, rule_type, expression, memo
+	</sql>
+
+	<sql id="paramsSql1">
+		<if test="condition != null"> 
+		<![CDATA[and name like #{condition}]]>
+		</if>
+	</sql>
+
+	<select id="queryWithPage" resultMap="BaseResultMap">
+		<![CDATA[
+		select
+		id as id, 
+		name as name, 
+		rule_type as ruleType, 
+		expression as expression, 
+    	memo as memo
+		from interface_rule_return where 1=1 ]]>
+		<include refid="paramsSql1" />
+	</select>
+
+	<select id="queryAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from interface_rule_return
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from interface_rule_return
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		interface_rule_return
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert"
+		parameterType="com.scloudpay.testframe.interfacetest.entity.InterfaceReturnRule">
+		insert into interface_rule_return (id, name, rule_type,
+		expression, memo)
+		values (#{id,jdbcType=BIGINT},
+		#{name,jdbcType=VARCHAR},
+		#{ruleType,jdbcType=INTEGER},
+		#{expression,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.scloudpay.testframe.interfacetest.entity.InterfaceReturnRule">
+		insert into interface_rule_return
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="ruleType != null">
+				rule_type,
+			</if>
+			<if test="expression != null">
+				expression,
+			</if>
+			<if test="memo != null">
+				memo,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="ruleType != null">
+				#{ruleType,jdbcType=INTEGER},
+			</if>
+			<if test="expression != null">
+				#{expression,jdbcType=VARCHAR},
+			</if>
+			<if test="memo != null">
+				#{memo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.scloudpay.testframe.interfacetest.entity.InterfaceReturnRule">
+		update interface_rule_return
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="ruleType != null">
+				rule_type = #{ruleType,jdbcType=INTEGER},
+			</if>
+			<if test="expression != null">
+				expression = #{expression,jdbcType=VARCHAR},
+			</if>
+			<if test="memo != null">
+				memo = #{memo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.scloudpay.testframe.interfacetest.entity.InterfaceReturnRule">
+		update interface_rule_return
+		set name =
+		#{name,jdbcType=VARCHAR},
+		rule_type = #{ruleType,jdbcType=INTEGER},
+		expression = #{expression,jdbcType=VARCHAR},
+		memo =
+		#{memo,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

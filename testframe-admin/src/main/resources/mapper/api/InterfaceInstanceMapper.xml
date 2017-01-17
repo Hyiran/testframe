@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.scloudpay.testframe.interfacetest.dao.InterfaceInstanceMapper">
+	<resultMap id="BaseResultMap"
+		type="com.scloudpay.testframe.interfacetest.entity.InterfaceInstance">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="api_name" property="apiName" jdbcType="VARCHAR" />
+		<result column="method_name" property="methodName" jdbcType="VARCHAR" />
+		<result column="return_rule_id" property="returnRuleId"
+			jdbcType="BIGINT" />
+		<result column="sql_rule_id" property="sqlRuleId" jdbcType="BIGINT" />
+		<result column="cust_rule_id" property="custRuleId" jdbcType="BIGINT" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, api_name, method_name, return_rule_id, sql_rule_id,
+		cust_rule_id, memo
+	</sql>
+
+	<sql id="paramsSql1">
+		<if test="condition != null"> 
+		<![CDATA[and name like #{condition}]]>
+		</if>
+	</sql>
+
+	<select id="queryWithPage" resultMap="BaseResultMap">
+		<![CDATA[
+		select
+		id as id, 
+		name as name, 
+		api_name as apiName, 
+		method_name as methodName, 
+		return_rule_id as returnRuleId,
+		sql_rule_id as sqlRuleId,
+		cust_rule_id as custRuleId,
+    	memo as memo
+		from interface_instance where 1=1 ]]>
+		<include refid="paramsSql1" />
+	</select>
+
+	<select id="queryAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from interface_instance
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from interface_instance
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from interface_instance
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert"
+		parameterType="com.scloudpay.testframe.interfacetest.entity.InterfaceInstance">
+		insert into interface_instance (id, name, api_name,
+		method_name, return_rule_id, sql_rule_id,
+		cust_rule_id, memo)
+		values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+		#{apiName,jdbcType=VARCHAR},
+		#{methodName,jdbcType=VARCHAR}, #{returnRuleId,jdbcType=BIGINT}, #{sqlRuleId,jdbcType=BIGINT},
+		#{custRuleId,jdbcType=BIGINT}, #{memo,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="insertSelective"
+		parameterType="com.scloudpay.testframe.interfacetest.entity.InterfaceInstance">
+		insert into interface_instance
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="apiName != null">
+				api_name,
+			</if>
+			<if test="methodName != null">
+				method_name,
+			</if>
+			<if test="returnRuleId != null">
+				return_rule_id,
+			</if>
+			<if test="sqlRuleId != null">
+				sql_rule_id,
+			</if>
+			<if test="custRuleId != null">
+				cust_rule_id,
+			</if>
+			<if test="memo != null">
+				memo,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="apiName != null">
+				#{apiName,jdbcType=VARCHAR},
+			</if>
+			<if test="methodName != null">
+				#{methodName,jdbcType=VARCHAR},
+			</if>
+			<if test="returnRuleId != null">
+				#{returnRuleId,jdbcType=BIGINT},
+			</if>
+			<if test="sqlRuleId != null">
+				#{sqlRuleId,jdbcType=BIGINT},
+			</if>
+			<if test="custRuleId != null">
+				#{custRuleId,jdbcType=BIGINT},
+			</if>
+			<if test="memo != null">
+				#{memo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.scloudpay.testframe.interfacetest.entity.InterfaceInstance">
+		update interface_instance
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="apiName != null">
+				api_name = #{apiName,jdbcType=VARCHAR},
+			</if>
+			<if test="methodName != null">
+				method_name = #{methodName,jdbcType=VARCHAR},
+			</if>
+			<if test="returnRuleId != null">
+				return_rule_id = #{returnRuleId,jdbcType=BIGINT},
+			</if>
+			<if test="sqlRuleId != null">
+				sql_rule_id = #{sqlRuleId,jdbcType=BIGINT},
+			</if>
+			<if test="custRuleId != null">
+				cust_rule_id = #{custRuleId,jdbcType=BIGINT},
+			</if>
+			<if test="memo != null">
+				memo = #{memo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.scloudpay.testframe.interfacetest.entity.InterfaceInstance">
+		update interface_instance
+		set name = #{name,jdbcType=VARCHAR},
+		api_name = #{apiName,jdbcType=VARCHAR},
+		method_name = #{methodName,jdbcType=VARCHAR},
+		return_rule_id = #{returnRuleId,jdbcType=BIGINT},
+		sql_rule_id = #{sqlRuleId,jdbcType=BIGINT},
+		cust_rule_id = #{custRuleId,jdbcType=BIGINT},
+		memo = #{memo,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>
