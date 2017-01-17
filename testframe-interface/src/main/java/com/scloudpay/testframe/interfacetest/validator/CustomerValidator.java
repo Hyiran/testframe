@@ -23,11 +23,7 @@ import com.scloudpay.testframe.interfacetest.bean.ValidatorMessage;
  */
 public class CustomerValidator implements Validator {
 
-	public ValidatorMessage validate(Object obj) {
-		return null;
-	}
-
-	public ValidatorMessage validate() {
+	public ValidatorMessage validate(String returnJson) {
 		return null;
 	}
 

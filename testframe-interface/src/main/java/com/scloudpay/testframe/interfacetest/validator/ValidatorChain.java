@@ -24,11 +24,13 @@ import java.util.List;
  */
 public class ValidatorChain {
 	
+	
+	
 	private List<Validator> validatorChain = new ArrayList<Validator>();
 	
-	public void validate(){
+	public void validate(String returnJson) {
 		for(Validator v : validatorChain){
-			v.validate();
+			v.validate(returnJson);
 		}
 	}
 

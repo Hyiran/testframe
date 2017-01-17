@@ -12,6 +12,8 @@ package com.scloudpay.testframe.mock.third;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.scloudpay.testframe.mock.third.config.ThridMockConfig;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -45,8 +47,9 @@ public abstract class HttpServerMock implements ServerMock {
 	/* (non-Javadoc)
 	 * @see com.scloudpay.testframe.mock.ServerMock#start()
 	 */
-	public void start(int port) {
+	public void start() {
         try {
+        	int port = this.getMockConfig().getPort();
         	bossGroup = new NioEventLoopGroup();
         	workerGroup = new NioEventLoopGroup();
         	
@@ -85,5 +88,7 @@ public abstract class HttpServerMock implements ServerMock {
 	}
 	
 	public abstract ChannelInboundHandlerAdapter getHandler();
+	
+	public abstract ThridMockConfig getMockConfig();
 
 }

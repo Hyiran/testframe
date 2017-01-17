@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @version 1.0.0
  *
  */
-public class DataSourceConn implements Serializable {
+public class DataSourceConnInfo implements Serializable {
 	
     private Long id;
 

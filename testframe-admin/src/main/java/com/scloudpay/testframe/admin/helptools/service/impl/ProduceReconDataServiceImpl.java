@@ -16,7 +16,7 @@ import com.jcraft.jsch.ChannelSftp;
 import com.ninefbank.smallpay.common.exception.ApplicationException;
 import com.scloudpay.testframe.admin.conn.dao.DataSourceConnMapper;
 import com.scloudpay.testframe.admin.conn.dao.FTPConnInfoMapper;
-import com.scloudpay.testframe.admin.conn.entity.DataSourceConn;
+import com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo;
 import com.scloudpay.testframe.admin.conn.entity.FTPConnInfo;
 import com.scloudpay.testframe.admin.helptools.FreeMarker;
 import com.scloudpay.testframe.admin.helptools.OutReconOrderDataHelper;
@@ -24,7 +24,7 @@ import com.scloudpay.testframe.admin.helptools.entity.ChannelDKOrder;
 import com.scloudpay.testframe.admin.helptools.mode.ReconData;
 import com.scloudpay.testframe.admin.helptools.mode.ReconDataConfig;
 import com.scloudpay.testframe.admin.helptools.service.IProduceReconDataService;
-import com.scloudpay.testframe.admin.util.DataSourceHelper;
+import com.scloudpay.testframe.admin.util.DataSourceUtil;
 import com.scloudpay.testframe.admin.util.SFTPHelper;
 
 /**
@@ -109,14 +109,14 @@ public class ProduceReconDataServiceImpl implements IProduceReconDataService {
 	*/
 	private List<ReconData> produceData(ReconDataConfig rcConfig) throws ApplicationException {
 		
-		DataSourceConn dbConn = dataSourceConnMapper.selectByPrimaryKey(rcConfig.getDataSourceId());
+		DataSourceConnInfo dbConn = dataSourceConnMapper.selectByPrimaryKey(rcConfig.getDataSourceId());
 		
 		if(null == dbConn){
 			throw new ApplicationException("ERROR_DB", "订单数据的数据源配置错误：为null");
 		}
 		
 		//根据对账配置的订单数据源，创建订单数据库访问辅助类
-		DataSourceHelper dbHelper = new DataSourceHelper(dbConn);
+		DataSourceUtil dbHelper = new DataSourceUtil(dbConn);
 		
 		//根据对账配置的和对账订单数据源访问辅助类，创建外部对账订单数据获取辅助类
 		OutReconOrderDataHelper outReconDataHelper = new OutReconOrderDataHelper(dbHelper, rcConfig);

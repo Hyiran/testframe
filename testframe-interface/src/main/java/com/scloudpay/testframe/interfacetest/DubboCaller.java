@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.alibaba.fastjson.JSON;
 import com.ninefbank.smallpay.common.exception.ApplicationException;
 import com.scloudpay.testframe.examples.bean.RequestBean;
 import com.scloudpay.testframe.examples.bean.ResponseBean;
@@ -70,6 +71,29 @@ public class DubboCaller<S,R> {
 			throw new ApplicationException("error_interface_dubbo_caller","Dubbo接口调用错误");
 		}
     	return response;
+	}
+	
+	/**调用Dubbo服务返回JSON数据
+	 * 
+	 * @param requestParams
+	 * @param interfaceName
+	 * @param methodName
+	 * @return
+	 * @throws ApplicationException
+	 */
+	public String call1(S requestParams, String interfaceName, String methodName) throws ApplicationException{
+		Object dubboService = context.getBean(interfaceName);
+		Class<?> herosClass = dubboService.getClass();
+		
+		Object response = null;
+    	try {
+    		Method m1 = herosClass.getMethod(methodName, RequestBean.class);
+    		response = m1.invoke(dubboService,requestParams);
+		} catch (Exception e) {
+			logger.error("Dubbo接口调用错误:", e);
+			throw new ApplicationException("error_interface_dubbo_caller","Dubbo接口调用错误");
+		}
+    	return JSON.toJSONString(response);
 	}
 	
 	public static void main(String[] args) {

@@ -13,6 +13,8 @@ package com.scloudpay.testframe.mock.third.handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.netty.util.CharsetUtil;
+
 /**
  *
  * ThirdAuthServerHandler
@@ -31,9 +33,10 @@ public class ThirdAuthServerHandler extends HttpServerInboundHandler {
 	 * @see com.scloudpay.testframe.mock.server.handler.HttpServerInboundHandler#getResponseMsg(java.lang.String)
 	 */
 	public byte[] getResponseMsg(String reqMsg) {
+		logger.debug("接收到的消息内容："+reqMsg);
 		//String 转换为DTO
 		//根据DTO进行响应消息构建
-		return null;
+		return "I'm OK".getBytes(CharsetUtil.UTF_8);
 	}
 
 

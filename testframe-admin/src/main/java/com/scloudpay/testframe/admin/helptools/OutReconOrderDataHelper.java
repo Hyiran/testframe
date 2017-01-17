@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import com.ninefbank.smallpay.common.exception.ApplicationException;
 import com.scloudpay.testframe.admin.helptools.entity.ChannelDKOrder;
 import com.scloudpay.testframe.admin.helptools.mode.ReconDataConfig;
-import com.scloudpay.testframe.admin.util.DataSourceHelper;
+import com.scloudpay.testframe.admin.util.DataSourceUtil;
 
 /**
  *
@@ -39,9 +39,9 @@ public class OutReconOrderDataHelper {
 
 	private ReconDataConfig config;
 
-	private DataSourceHelper dsHelper;
+	private DataSourceUtil dsHelper;
 
-	public OutReconOrderDataHelper(DataSourceHelper dsHelper, ReconDataConfig config) {
+	public OutReconOrderDataHelper(DataSourceUtil dsHelper, ReconDataConfig config) {
 		this.config = config;
 		this.dsHelper = dsHelper;
 	}

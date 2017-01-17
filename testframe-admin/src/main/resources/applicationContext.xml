@@ -17,7 +17,7 @@
 
 	<!-- Activates scanning of @Autowired -->
 	<context:annotation-config />
-	<context:component-scan base-package="com.ninefbank.smallpay,com.scloudpay.testframe.admin" />
+	<context:component-scan base-package="com.ninefbank.smallpay,com.scloudpay.testframe" />
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<bean id="transactionManager"
@@ -29,11 +29,11 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
-		<property name="typeAliasesPackage" value="com.scloudpay.testframe.admin" />
+		<property name="typeAliasesPackage" value="com.scloudpay.testframe" />
 	</bean>
 	<!-- 自动扫描mybatis映射 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.scloudpay.testframe.admin" />
+		<property name="basePackage" value="com.scloudpay.testframe" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 

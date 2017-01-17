@@ -5,23 +5,23 @@ import java.util.Map;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import com.scloudpay.testframe.admin.conn.entity.DataSourceConn;
+import com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo;
 
 public interface DataSourceConnMapper {
 	
-	public List<DataSourceConn> selectAll() throws Exception;
+	public List<DataSourceConnInfo> selectAll() throws Exception;
 	
-	public PageList<DataSourceConn> queryWithPage(Map<String, Object> params, PageBounds pageBounds) throws Exception;
+	public PageList<DataSourceConnInfo> queryWithPage(Map<String, Object> params, PageBounds pageBounds) throws Exception;
 	
     int deleteByPrimaryKey(Long id);
 
-    int insert(DataSourceConn record);
+    int insert(DataSourceConnInfo record);
 
-    int insertSelective(DataSourceConn record);
+    int insertSelective(DataSourceConnInfo record);
 
-    DataSourceConn selectByPrimaryKey(Long id);
+    DataSourceConnInfo selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(DataSourceConn record);
+    int updateByPrimaryKeySelective(DataSourceConnInfo record);
 
-    int updateByPrimaryKey(DataSourceConn record);
+    int updateByPrimaryKey(DataSourceConnInfo record);
 }

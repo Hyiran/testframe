@@ -1,13 +1,4 @@
-/**
- * <b>项目名：</b>微支付<br/>
- * <b>包名：</b>com.ninefbank.smallpay.aitest.config.web<br/>
- * <b>文件名：</b>DataSourceConnController.java<br/>
- * <b>版本信息：</b><br/>
- * <b>日期：</b>2016年12月23日-上午10:07:53<br/>
- * <b>Copyright (c)</b> 2016 9FBank.com 玖富公司-版权所有<br/>
- *
- */
-package com.scloudpay.testframe.admin.conn.web;
+package com.scloudpay.testframe.interfacetest.web;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,25 +16,16 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.ninefbank.smallpay.common.exception.ApplicationException;
 import com.ninefbank.smallpay.common.web.BaseController;
-import com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo;
-import com.scloudpay.testframe.admin.conn.service.IDataSourceConnInfoService;
+import com.scloudpay.testframe.interfacetest.entity.InterfaceSqlRule;
+import com.scloudpay.testframe.interfacetest.service.ISqlRuleService;
 
-/**
- *
- * DataSourceConnController
- * 
- * @author TanDong
- * 2016年12月23日 上午10:07:53
- * 
- * @version 1.0.0
- *
- */
 @Controller
-@RequestMapping("conn/db")
-public class DataSourceConnController extends BaseController {
+@RequestMapping("rule/sql")
+public class SqlRuleController extends BaseController {
 
+	
 	@Autowired
-	private IDataSourceConnInfoService dataSourceConnService;
+	private ISqlRuleService sqlRuleService;
 
 	/**
 	 * 分页查询FTP连接信息
@@ -53,7 +35,7 @@ public class DataSourceConnController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/queryWithPage", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> queryDataSourceConn(@RequestParam Integer pageSize,
+	public @ResponseBody Map<String, Object> queryInterfaceSqlRule(@RequestParam Integer pageSize,
 			@RequestParam Integer currentPage, @RequestParam String condition) throws ApplicationException {
 
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -63,7 +45,7 @@ public class DataSourceConnController extends BaseController {
 			params.put("condition", "%" + condition + "%");
 		}
 
-		PageList<DataSourceConnInfo> ret = dataSourceConnService.queryWithPage(params, pageBounds);
+		PageList<InterfaceSqlRule> ret = sqlRuleService.queryWithPage(params, pageBounds);
 
 		return buildResult(pageSize, currentPage, ret);
 	}
@@ -71,7 +53,7 @@ public class DataSourceConnController extends BaseController {
 	@RequestMapping(value = "/all", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> queryAll() throws ApplicationException {
 
-		List<DataSourceConnInfo> ret = dataSourceConnService.queryAll();
+		List<InterfaceSqlRule> ret = sqlRuleService.queryAll();
 
 		return buildResult(ret);
 	}
@@ -85,9 +67,9 @@ public class DataSourceConnController extends BaseController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addDataSourceConn(@RequestBody DataSourceConnInfo dataSourceConnInfo) throws ApplicationException {
+	public Map<String, Object> addInterfaceSqlRule(@RequestBody InterfaceSqlRule record) throws ApplicationException {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		dataSourceConnService.saveDataSourceConnInfo(dataSourceConnInfo);
+		sqlRuleService.insert(record);
 		ret.put("success", true);
 		return ret;
 	}
@@ -100,10 +82,10 @@ public class DataSourceConnController extends BaseController {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateDataSourceConn(@RequestBody DataSourceConnInfo dataSourceConnInfo)
+	public Map<String, Object> updateInterfaceSqlRule(@RequestBody InterfaceSqlRule record)
 			throws ApplicationException {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		dataSourceConnService.updateDataSourceConnInfo(dataSourceConnInfo);
+		sqlRuleService.update(record);
 		ret.put("success", true);
 		return ret;
 	}
@@ -117,18 +99,18 @@ public class DataSourceConnController extends BaseController {
 	 * @throws ApplicationException
 	 */
 	@RequestMapping(value = "/del", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> delDataSourceConn(@RequestParam long id) throws ApplicationException {
+	public @ResponseBody Map<String, Object> delInterfaceSqlRule(@RequestParam long id) throws ApplicationException {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		dataSourceConnService.delDataSourceConnInfo(id);
+		sqlRuleService.delete(id);
 		ret.put("success", true);
 		return ret;
 	}
 	
 	@RequestMapping(value = "/delBatch", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> delDataSourceConnBatch(@RequestParam("ids[]") List<Long> ids)
+	public @ResponseBody Map<String, Object> delInterfaceSqlRuleBatch(@RequestParam("ids[]") List<Long> ids)
 			throws ApplicationException {
 		Map<String, Object> ret = new HashMap<String, Object>();
-		dataSourceConnService.delDataSourceConnInfo(ids);
+		sqlRuleService.deleteBatch(ids);
 		ret.put("success", true);
 		return ret;
 	}

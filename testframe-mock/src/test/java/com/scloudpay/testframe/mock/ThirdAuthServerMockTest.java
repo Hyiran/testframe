@@ -9,7 +9,13 @@
  */
 package com.scloudpay.testframe.mock;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.scheduling.annotation.Async;
+
 import com.scloudpay.testframe.mock.third.ThirdAuthServerMock;
+import com.scloudpay.testframe.mock.third.config.ThridMockConfig;
 
 import junit.framework.TestCase;
 
@@ -17,17 +23,42 @@ import junit.framework.TestCase;
  *
  * ServerMockTest
  * 
- * @author TanDong
- * 2017年1月10日 下午1:39:59
+ * @author TanDong 2017年1月10日 下午1:39:59
  * 
  * @version 1.0.0
  *
  */
 public class ThirdAuthServerMockTest extends TestCase {
 	
-	public void test(){
-		ThirdAuthServerMock mock = new ThirdAuthServerMock();
-		mock.start(8090);
+	ThirdAuthServerMock mock;
+
+	@Before
+	public void testInit() {
+
+		final ThridMockConfig conf = new ThridMockConfig();
+		conf.setPort(8090);
+
+		
+		new Thread(){
+			public void run(){
+				mock = new ThirdAuthServerMock(conf);
+				mock.start();
+			}
+		}.start();
 	}
 
+	@Test
+	public void testSend() {
+		HttpClient client = new HttpClient();
+        try {
+			client.connect("127.0.0.1", 8090);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@After
+	public void testStop() {
+		mock.stop();
+	}
 }

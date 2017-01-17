@@ -25,11 +25,8 @@ public class SQLValidator implements Validator {
 	
 	
 
-	public ValidatorMessage validate(Object sql) {
-		return null;
-	}
-
-	public ValidatorMessage validate() {
+	public ValidatorMessage validate(String returnJson) {
+		
 		return null;
 	}
 

@@ -36,6 +36,10 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
 		<mapper resource="mapper/conn/FTPConnInfoMapper.xml"/>
 		<mapper resource="mapper/conn/DataSourceConnMapper.xml"/>
 		
+		<mapper resource="mapper/api/InterfaceReturnRuleMapper.xml"/>
+		<mapper resource="mapper/api/InterfaceSqlRuleMapper.xml"/>
+		<mapper resource="mapper/api/InterfaceInstanceMapper.xml"/>
+		
 	</mappers>
 
 </configuration>

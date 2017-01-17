@@ -22,6 +22,16 @@ package com.scloudpay.testframe.interfacetest.bean;
 public class ValidatorMessage {
 	
 	private int result = 1;
+	
+	private String message;
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	public int getResult() {
 		return result;

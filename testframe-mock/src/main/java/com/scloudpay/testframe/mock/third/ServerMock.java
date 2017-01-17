@@ -21,7 +21,7 @@ package com.scloudpay.testframe.mock.third;
  */
 public interface ServerMock {
 	
-	public void start(int port);
+	public void start();
 	
 	public void stop();
 

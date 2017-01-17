@@ -22,7 +22,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.ninefbank.smallpay.common.exception.ApplicationException;
 import com.scloudpay.testframe.admin.conn.dao.DataSourceConnMapper;
-import com.scloudpay.testframe.admin.conn.entity.DataSourceConn;
+import com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo;
 import com.scloudpay.testframe.admin.conn.service.IDataSourceConnInfoService;
 
 /**
@@ -49,11 +49,11 @@ public class DataSourceConnInfoServiceImpl implements IDataSourceConnInfoService
 	 * @see com.tandong.ssm.sysmgr.service.IDataSourceConnInfoService#saveDataSourceConnInfo(com.tandong.ssm.sysmgr.entity.DataSourceConnInfo)
 	 */
 	@Transactional(readOnly = false, rollbackFor=Exception.class )
-	public void saveDataSourceConnInfo(DataSourceConn dataSourceConn)
+	public void saveDataSourceConnInfo(DataSourceConnInfo dataSourceConnInfo)
 			throws ApplicationException {
 		try{
 			//插入数据库连接信息主表
-			dataSourceConnMapper.insert(dataSourceConn);
+			dataSourceConnMapper.insert(dataSourceConnInfo);
 			
 		}catch(Exception e){
 			logger.error("添加数据库连接信息失败", e);
@@ -62,9 +62,9 @@ public class DataSourceConnInfoServiceImpl implements IDataSourceConnInfoService
 	}
 
 	@Transactional(readOnly = false, rollbackFor=Exception.class )
-	public void updateDataSourceConnInfo(DataSourceConn dataSourceConn) throws ApplicationException {
+	public void updateDataSourceConnInfo(DataSourceConnInfo dataSourceConnInfo) throws ApplicationException {
 		try{
-			dataSourceConnMapper.updateByPrimaryKeySelective(dataSourceConn);
+			dataSourceConnMapper.updateByPrimaryKeySelective(dataSourceConnInfo);
 		}catch(Exception e){
 			logger.error("更新数据库连接信息失败", e);
 			throw new ApplicationException("error.dictitem.update");
@@ -100,7 +100,7 @@ public class DataSourceConnInfoServiceImpl implements IDataSourceConnInfoService
 	/* (non-Javadoc)
 	 * @see com.ninefbank.smallpay.aitest.config.service.IDataSourceConnInfoService#getDataSourceConnInfo(long)
 	 */
-	public DataSourceConn getDataSourceConnInfo(long id) throws ApplicationException {
+	public DataSourceConnInfo getDataSourceConnInfo(long id) throws ApplicationException {
 		try{
 			return dataSourceConnMapper.selectByPrimaryKey(id);
 		}catch(Exception e){
@@ -112,7 +112,7 @@ public class DataSourceConnInfoServiceImpl implements IDataSourceConnInfoService
 	/* (non-Javadoc)
 	 * @see com.ninefbank.smallpay.aitest.config.service.IDataSourceConnInfoService#queryWithPage(java.util.Map, com.github.miemiedev.mybatis.paginator.domain.PageBounds)
 	 */
-	public PageList<DataSourceConn> queryWithPage( Map<String, Object> params, PageBounds pageBounds) throws ApplicationException {
+	public PageList<DataSourceConnInfo> queryWithPage( Map<String, Object> params, PageBounds pageBounds) throws ApplicationException {
 		try{
 			return dataSourceConnMapper.queryWithPage(params, pageBounds);
 		} catch (Exception e) {
@@ -121,7 +121,7 @@ public class DataSourceConnInfoServiceImpl implements IDataSourceConnInfoService
 		}
 	}
 	
-	public List<DataSourceConn> queryAll() throws ApplicationException {
+	public List<DataSourceConnInfo> queryAll() throws ApplicationException {
 		try{
 			return dataSourceConnMapper.selectAll();
 		} catch (Exception e) {

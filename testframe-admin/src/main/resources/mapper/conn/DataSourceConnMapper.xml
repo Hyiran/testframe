@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.scloudpay.testframe.admin.conn.dao.DataSourceConnMapper" >
-  <resultMap id="BaseResultMap" type="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+  <resultMap id="BaseResultMap" type="com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
@@ -64,7 +64,7 @@
     delete from conn_datasource
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+  <insert id="insert" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo" >
     insert into conn_datasource (id, name, ip_address, 
       port, user_name, pwd, 
       statu, memo)
@@ -72,7 +72,7 @@
       #{port,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
       #{statu,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+  <insert id="insertSelective" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo" >
     insert into conn_datasource
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -127,7 +127,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo" >
     update conn_datasource
     <set >
       <if test="name != null" >
@@ -154,7 +154,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConn" >
+  <update id="updateByPrimaryKey" parameterType="com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo" >
     update conn_datasource
     set name = #{name,jdbcType=VARCHAR},
       ip_address = #{ipAddress,jdbcType=VARCHAR},

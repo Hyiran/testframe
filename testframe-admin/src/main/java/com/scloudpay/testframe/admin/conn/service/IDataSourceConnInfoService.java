@@ -15,7 +15,7 @@ import java.util.Map;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.ninefbank.smallpay.common.exception.ApplicationException;
-import com.scloudpay.testframe.admin.conn.entity.DataSourceConn;
+import com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo;
 
 /**
  *
@@ -29,7 +29,7 @@ import com.scloudpay.testframe.admin.conn.entity.DataSourceConn;
  */
 public interface IDataSourceConnInfoService {
 	
-	public List<DataSourceConn> queryAll() throws ApplicationException;
+	public List<DataSourceConnInfo> queryAll() throws ApplicationException;
 	
 
 	/**
@@ -37,21 +37,21 @@ public interface IDataSourceConnInfoService {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	public PageList<DataSourceConn> queryWithPage(Map<String, Object> params, PageBounds pageBounds) throws ApplicationException;
+	public PageList<DataSourceConnInfo> queryWithPage(Map<String, Object> params, PageBounds pageBounds) throws ApplicationException;
 	
 	/**
 	 * 增加数据库连接信息
 	 * @param dictType
 	 * @throws ApplicationException
 	 */
-	public void saveDataSourceConnInfo(DataSourceConn dataSourceConn) throws ApplicationException;
+	public void saveDataSourceConnInfo(DataSourceConnInfo dataSourceConnInfo) throws ApplicationException;
 	
 	/**
 	 * 更新数据库连接信息信息 
 	 * @param dictType
 	 * @throws ApplicationException
 	 */
-	public void updateDataSourceConnInfo(DataSourceConn dataSourceConn) throws ApplicationException;
+	public void updateDataSourceConnInfo(DataSourceConnInfo dataSourceConnInfo) throws ApplicationException;
 	
 	/**
 	 * 删除数据库连接信息信息
@@ -68,6 +68,6 @@ public interface IDataSourceConnInfoService {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	public DataSourceConn getDataSourceConnInfo(long id) throws ApplicationException;
+	public DataSourceConnInfo getDataSourceConnInfo(long id) throws ApplicationException;
 
 }

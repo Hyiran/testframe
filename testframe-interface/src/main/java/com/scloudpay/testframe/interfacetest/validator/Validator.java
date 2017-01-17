@@ -23,8 +23,6 @@ import com.scloudpay.testframe.interfacetest.bean.ValidatorMessage;
  */
 public interface Validator {
 	
-	public ValidatorMessage validate(Object obj);
+	public ValidatorMessage validate(String returnJson);
 	
-	public ValidatorMessage validate();
-
 }

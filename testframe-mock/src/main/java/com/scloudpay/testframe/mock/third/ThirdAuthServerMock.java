@@ -9,6 +9,11 @@
  */
 package com.scloudpay.testframe.mock.third;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.scloudpay.testframe.mock.third.config.DefaultThirdMockConfig;
+import com.scloudpay.testframe.mock.third.config.ThridMockConfig;
 import com.scloudpay.testframe.mock.third.handler.ThirdAuthServerHandler;
 
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -25,11 +30,33 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class ThirdAuthServerMock extends HttpServerMock {
 
+	Logger logger = LoggerFactory.getLogger(ThirdAuthServerMock.class);
+	
+	ThridMockConfig mockConf = new ThridMockConfig();
+	
+	
+	/**
+	 * 创建一个新的实例 ThirdAuthServerMock.
+	 *
+	 * @param mockConf
+	 */
+	public ThirdAuthServerMock(ThridMockConfig mockConf){
+		if(null == mockConf){
+			this.mockConf = new DefaultThirdMockConfig();
+		}else{
+			this.mockConf = mockConf;
+		}
+	}
+	
 	/* (non-Javadoc)
-	 * @see com.scloudpay.testframe.mock.server.HttpServerMock#getHandler()
+	 * @see com.scloudpay.testframe.mock.third.HttpServerMock#getHandler()
 	 */
 	public ChannelInboundHandlerAdapter getHandler() {
 		return new ThirdAuthServerHandler();
 	}
-	
+
+	public ThridMockConfig getMockConfig() {
+		return mockConf;
+	}
+
 }

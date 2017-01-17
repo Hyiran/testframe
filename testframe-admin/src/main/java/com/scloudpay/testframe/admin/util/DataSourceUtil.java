@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.ninefbank.smallpay.common.exception.ApplicationException;
-import com.scloudpay.testframe.admin.conn.entity.DataSourceConn;
+import com.scloudpay.testframe.admin.conn.entity.DataSourceConnInfo;
 
 /**
  *
@@ -32,15 +32,15 @@ import com.scloudpay.testframe.admin.conn.entity.DataSourceConn;
  * @version 1.0.0
  *
  */
-public class DataSourceHelper {
+public class DataSourceUtil {
 
-	private static Logger logger = LoggerFactory.getLogger(DataSourceHelper.class);
+	private static Logger logger = LoggerFactory.getLogger(DataSourceUtil.class);
 
 	public String DB_URL = "jdbc:mysql://rdsp5ae3ypidj48wkt2o.mysql.rds.aliyuncs.com:3306/pay_channel?useUnicode=true&amp;characterEncoding=UTF-8";
 
 	public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
 
-	private DataSourceConn dataSource;
+	private DataSourceConnInfo dataSource;
 
 	public Connection conn = null;
 
@@ -51,7 +51,7 @@ public class DataSourceHelper {
 	 *
 	 * @param dataSource
 	 */
-	public DataSourceHelper(DataSourceConn dataSource) {
+	public DataSourceUtil(DataSourceConnInfo dataSource) {
 		this.dataSource = dataSource;
 		DB_URL = "jdbc:mysql://"+dataSource.getIpAddress()+":"+dataSource.getPort()+"/"+dataSource.getDbName()+"?useUnicode=true&amp;characterEncoding=UTF-8";
 	}
