@@ -3,6 +3,9 @@ package com.scloudpay.testframe.interfacetest.entity;
 import java.io.Serializable;
 
 public class InterfaceInstance implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
     private Long id;
 
     private String name;
@@ -18,10 +21,19 @@ public class InterfaceInstance implements Serializable {
     private Long custRuleId;
 
     private String memo;
+    
+    //前端使用扩展属性
+    private boolean check;
+    
+    public boolean isCheck() {
+		return check;
+	}
 
-    private static final long serialVersionUID = 1L;
+	public void setCheck(boolean check) {
+		this.check = check;
+	}
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 

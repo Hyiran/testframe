@@ -16,8 +16,16 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.ninefbank.smallpay.common.exception.ApplicationException;
 import com.ninefbank.smallpay.common.web.BaseController;
+import com.scloudpay.testframe.examples.bean.RequestBean;
+import com.scloudpay.testframe.interfacetest.DubboCaller;
+import com.scloudpay.testframe.interfacetest.bean.ValidatorMessage;
 import com.scloudpay.testframe.interfacetest.entity.InterfaceInstance;
+import com.scloudpay.testframe.interfacetest.entity.InterfaceReturnRule;
+import com.scloudpay.testframe.interfacetest.entity.InterfaceSqlRule;
 import com.scloudpay.testframe.interfacetest.service.IInstanceService;
+import com.scloudpay.testframe.interfacetest.service.IReturnRuleService;
+import com.scloudpay.testframe.interfacetest.service.ISqlRuleService;
+import com.scloudpay.testframe.interfacetest.validator.ReturnValidator;
 
 @Controller
 @RequestMapping("instance/api")
@@ -26,6 +34,12 @@ public class InstanceController extends BaseController {
 	
 	@Autowired
 	private IInstanceService instanceService;
+	
+	@Autowired
+	private IReturnRuleService returnRuleService;
+	
+	@Autowired
+	private ISqlRuleService sqlRuleService;
 
 	/**
 	 * 分页查询FTP连接信息
@@ -113,5 +127,30 @@ public class InstanceController extends BaseController {
 		instanceService.deleteBatch(ids);
 		ret.put("success", true);
 		return ret;
+	}
+	
+	/**
+	 * 执行接口测试实例
+	 * @param instance
+	 * @return
+	 * @throws ApplicationException
+	 */
+	@RequestMapping(value = "/execute", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> execute(@RequestBody InterfaceInstance instance) throws ApplicationException {
+
+		DubboCaller caller = new DubboCaller();
+		caller.init(new String[]{"dubbo-consumer.xml"});
+		
+		RequestBean rq = new RequestBean();
+		rq.setCardNo("6225880135053925");
+		rq.setOrderNo("test_order_no_2017010500001");
+		String returnJson = caller.call1(rq, instance.getApiName(), instance.getMethodName());
+		InterfaceReturnRule returnRule = returnRuleService.get(instance.getReturnRuleId());
+		InterfaceSqlRule sqlRule = sqlRuleService.get(instance.getSqlRuleId());
+		
+		ReturnValidator returnVal = new ReturnValidator();
+		returnVal.setExpression(returnRule.getExpression());
+		ValidatorMessage msg = returnVal.validate(returnJson);
+		return buildResult(msg);
 	}
 }

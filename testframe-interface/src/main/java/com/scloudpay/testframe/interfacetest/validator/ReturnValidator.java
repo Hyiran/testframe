@@ -87,17 +87,17 @@ public class ReturnValidator implements Validator {
 		StringBuffer retMsg = new StringBuffer();
         for(Map.Entry<String, String> entry1:map.entrySet()){
             String m1value = entry1.getValue() == null?"":entry1.getValue();
-            String m2value = mapTarget.get(entry1.getKey())==null?"":mapTarget.get(entry1.getKey());
+            String m2value = mapTarget.get(entry1.getKey())==null?"":String.valueOf(mapTarget.get(entry1.getKey()));
             if (!m1value.equals(m2value)) {
-            	retMsg.append("属性："+entry1.getKey()+"的值校验失败,错误值："+m2value+"，正确值应为："+m1value+"\n");
+            	retMsg.append("属性："+entry1.getKey()+"的值校验失败,错误值："+m2value+"，正确值应为："+m1value+"<br/>");
             }
         }
         if(retMsg.toString().length() > 0){
         	vmsg.setResult(0);
-        	vmsg.setMessage("校验失败，校验结果：" + retMsg.toString());
+        	vmsg.setMessage("校验失败，校验结果：<br/>" + retMsg.toString());
         }else{
         	vmsg.setResult(1);
-        	vmsg.setMessage("校验成功，返回值：" + map.toString());
+        	vmsg.setMessage("校验成功，返回值：<br/>" + map.toString());
         }
         
 		return vmsg;

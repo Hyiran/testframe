@@ -12,7 +12,7 @@
 		</rollingPolicy>
 	 	<layout class="ch.qos.logback.classic.PatternLayout">  
 			<pattern>
-				[AITEST][%d{yyyy/MM/dd HH:mm:ss SSS}] %-5level [%thread][%c:%line]- %msg%n
+				[testframe-admin][%d{yyyy/MM/dd HH:mm:ss SSS}] %-5level [%thread][%c:%line]- %msg%n
 			</pattern>
 		</layout>
 	</appender>
@@ -21,7 +21,7 @@
 	 	<Encoding>UTF-8</Encoding>           
 	 	<layout class="ch.qos.logback.classic.PatternLayout">  
 			<pattern>
-				[AITEST][%d{yyyy/MM/dd HH:mm:ss SSS}] %-5level [%thread][%c:%line]- %msg%n
+				[testframe-admin][%d{yyyy/MM/dd HH:mm:ss SSS}] %-5level [%thread][%c:%line]- %msg%n
 			</pattern>
 		</layout>
 	</appender>

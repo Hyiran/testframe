@@ -91,7 +91,7 @@
 		        queryParams: queryParams,
 		        minimunCountColumns: 2,
 		        columns: [{
-		            field: 'id',
+		            field: 'check',
 		            checkbox: true
 		        },{
 		            field: 'name',
@@ -131,7 +131,7 @@
 		            align: 'left',
 		            valign: 'top',
 		            sortable: false
-		        }, {
+		        },{
 		
 		            field: 'custRuleId',
 		            title: '自定义校验规则',
@@ -139,7 +139,7 @@
 		            align: 'left',
 		            valign: 'top',
 		            sortable: false
-		        }, {
+		        },{
 		
 		            field: 'memo',
 		            title: '备注',
@@ -147,23 +147,53 @@
 		            align: 'left',
 		            valign: 'top',
 		            sortable: false
-		        }, {
+		        },{
 		            field: 'operate',
 		            title: '操作',
 		            width: 100,
 		            align: 'center',
 		            formatter:function(value,row,index){  
 	                    var e = '<a href="#" mce_href="#" onclick="executeTest(\''+ row.id + '\')">执行测试</a> ';  
-                        return e+d;  
+                        return e;  
                     } 
 		        }],
-		
 		        onLoadSuccess:function(){
 		        },
 		        onLoadError: function () {
 		            mif.showErrorMessageBox("数据加载失败！");
 		        }
 		    });
+		}
+		
+		function executeTest(rowid){
+			var arrselections = $("#table").bootstrapTable('getSelections');
+	 		var jsonData = JSON.stringify(arrselections[0]);
+	 		alert(jsonData);
+			$.ajax({
+				url : "instance/api/execute?t="+ (new Date()).valueOf(),
+				method : "POST",
+				contentType : "application/json",
+				dataType : "json",
+				data : jsonData,
+				async : false,
+				success : function(data) {
+					if (data.success) {
+						Dialog.alert({"message":data.data.message,"width":"400px"});
+						$('#add_dbconn_modal').modal('hide')
+						$("#table").bootstrapTable('refresh');
+					} else {
+						Dialog.alert("操作失败");
+					}
+				},
+				error : function(XMLHttpRequest, textStatus,
+						errorThrown) {
+					var result = JSON
+							.parse(XMLHttpRequest.responseText);
+					box.warnBox({
+						"content" : result.errorMessage
+					});
+				}
+			});
 		}
 		
 		//查询参数
